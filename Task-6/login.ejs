@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login | LearnSpace</title>
+    <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+    <main class="container">
+        <h1>Welcome Back!</h1>
+        <p>Log in to your LearnSpace account.</p>
+
+        <% if (error) { %>
+            <p style="color: red;"><%= error %></p>
+        <% } %>
+
+        <form action="/login" method="POST">
+            <label for="email">Email</label>
+            <input id="email" type="email" name="email" required>
+
+            <label for="password">Password</label>
+            <input id="password" type="password" name="password" required>
+
+            <button type="submit">Log In</button>
+        </form>
+
+        <p><a href="/">Back to registration</a></p>
+    </main>
+</body>
+</html>
