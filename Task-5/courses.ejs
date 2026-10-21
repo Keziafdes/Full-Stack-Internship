@@ -1,0 +1,197 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LearnSpace | Course Manager</title>
+    <link rel="stylesheet" href="/style.css">
+    <style>
+        .manager {
+            max-width: 900px;
+            margin: 50px auto;
+            padding: 24px;
+        }
+        .manager-form, .course-card {
+            background: white;
+            padding: 22px;
+            margin: 18px 0;
+            border-radius: 14px;
+            box-shadow: 0 5px 20px #25204412;
+        }
+        .manager input, .manager textarea {
+            display: block;
+            width: 100%;
+            box-sizing: border-box;
+            padding: 12px;
+            margin: 10px 0 16px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font: inherit;
+        }
+        .manager button {
+            padding: 10px 16px;
+            margin: 4px;
+            border: 0;
+            border-radius: 8px;
+            cursor: pointer;
+            background: #6c4ce5;
+            color: white;
+        }
+        .course-card h3 { margin-bottom: 8px; }
+        #message { margin: 12px 0; }
+    </style>
+</head>
+<body>
+    <main class="manager">
+        <h1>LearnSpace Course Manager</h1>
+        <p>Manage courses using our REST API.</p>
+        <p><a href="/">← Back to LearnSpace</a></p>
+
+        <form class="manager-form" id="courseForm">
+            <h2 id="formTitle">Add a Course</h2>
+            <input id="courseName" placeholder="Course name" required>
+            <textarea id="courseDescription"
+                placeholder="Course description" required></textarea>
+            <button type="submit" id="saveButton">Add Course</button>
+            <button type="button" id="cancelButton" hidden>Cancel Edit</button>
+        </form>
+
+        <p id="message" role="status"></p>
+        <section id="courseList" aria-live="polite"></section>
+    </main>
+
+    <script>
+        const form = document.getElementById("courseForm");
+        const nameInput = document.getElementById("courseName");
+        const descriptionInput =
+            document.getElementById("courseDescription");
+        const courseList = document.getElementById("courseList");
+        const message = document.getElementById("message");
+        const saveButton = document.getElementById("saveButton");
+        const cancelButton = document.getElementById("cancelButton");
+        const formTitle = document.getElementById("formTitle");
+
+        let editingId = null;
+
+        async function loadCourses() {
+            try {
+                const response = await fetch("/api/courses");
+                if (!response.ok) throw new Error("Could not load courses.");
+
+                const courses = await response.json();
+                courseList.replaceChildren();
+
+                courses.forEach(course => {
+                    const card = document.createElement("article");
+                    card.className = "course-card";
+
+                    const title = document.createElement("h3");
+                    title.textContent = course.name;
+
+                    const description = document.createElement("p");
+                    description.textContent = course.description;
+
+                    const editButton = document.createElement("button");
+                    editButton.textContent = "Edit";
+                    editButton.addEventListener("click", () => {
+                        editingId = course.id;
+                        nameInput.value = course.name;
+                        descriptionInput.value = course.description;
+                        formTitle.textContent = "Edit Course";
+                        saveButton.textContent = "Save Changes";
+                        cancelButton.hidden = false;
+                        nameInput.focus();
+                    });
+
+                    const deleteButton = document.createElement("button");
+                    deleteButton.textContent = "Delete";
+                    deleteButton.addEventListener("click", async () => {
+                        if (!confirm("Delete this course?")) return;
+
+                        const result = await fetch(
+                            "/api/courses/" + course.id,
+                            { method: "DELETE" }
+                        );
+
+                        if (result.ok) {
+                            message.textContent = "Course deleted.";
+                            loadCourses();
+                        } else {
+                            message.textContent = "Could not delete course.";
+                        }
+                    });
+
+                    card.append(title, description, editButton, deleteButton);
+                    courseList.appendChild(card);
+                });
+
+                if (courses.length === 0) {
+                    courseList.textContent = "No courses yet. Add one above!";
+                }
+            } catch (error) {
+                message.textContent = error.message;
+            }
+        }
+
+        form.addEventListener("submit", async event => {
+            event.preventDefault();
+
+            const data = {
+                name: nameInput.value.trim(),
+                description: descriptionInput.value.trim()
+            };
+
+            if (!data.name || !data.description) {
+                message.textContent = "Please fill in both fields.";
+                return;
+            }
+
+            const url = editingId === null
+                ? "/api/courses"
+                : "/api/courses/" + editingId;
+
+            const method = editingId === null ? "POST" : "PUT";
+
+            try {
+                const response = await fetch(url, {
+                    method,
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify(data)
+                });
+
+                const result = await response.json();
+
+                if (!response.ok) {
+                    message.textContent = result.error || "Request failed.";
+                    return;
+                }
+
+                message.textContent = editingId === null
+                    ? "Course added successfully!"
+                    : "Course updated successfully!";
+
+                resetForm();
+                await loadCourses();
+            } catch (error) {
+                message.textContent = "Could not connect to the API.";
+            }
+        });
+
+       
+function resetForm() {
+    editingId = null;
+    form.reset();
+    formTitle.textContent = "Add a Course";
+    saveButton.textContent = "Add Course";
+    cancelButton.hidden = true;
+    message.textContent = "";
+}
+
+
+        cancelButton.addEventListener("click", resetForm);
+
+        loadCourses();
+    </script>
+</body>
+</html>
