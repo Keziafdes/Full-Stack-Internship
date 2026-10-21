@@ -1,0 +1,166 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LearnSpace | Learn Without Limits</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+
+<nav class="navbar">
+    <div class="logo">LearnSpace<span>.</span></div>
+    <div class="nav-links">
+        <a href="#home">Home</a>
+        <a href="#courses">Courses</a>
+        <a href="#benefits">Why Us</a>
+        <a href="#register" class="nav-button">Get Started ↗</a>
+    </div>
+</nav>
+
+<section class="hero" id="home">
+    <div class="hero-content">
+        <span class="eyebrow">✦ YOUR JOURNEY STARTS HERE</span>
+        <h1>Learn something<br>new. <span>Change</span><br>everything.</h1>
+        <p>Discover skills, unlock your potential, and build a future you're excited about — one lesson at a time.</p>
+        <div class="hero-actions">
+            <a href="#courses" class="primary-button">Explore Courses ↗</a>
+            <a href="#register" class="secondary-button">Join LearnSpace</a>
+        </div>
+        <div class="hero-note">✦ Learn at your own pace &nbsp; ✦ Build real-world skills</div>
+    </div>
+
+    <div class="hero-visual">
+        <div class="visual-card main-visual">
+            <div class="visual-top"><span>YOUR NEXT CHAPTER</span><span>✦</span></div>
+            <div class="book-icon">📚</div>
+            <h3>Small steps.<br>Big possibilities.</h3>
+            <p>Your future self will thank you.</p>
+            <div class="progress-label"><span>Learning journey</span><span>Start today</span></div>
+            <div class="progress-track"><div></div></div>
+        </div>
+        <div class="floating-card float-one">🎯 <span><strong>Find your focus</strong><br>One goal at a time</span></div>
+        <div class="floating-card float-two">💡 <span><strong>Stay curious</strong><br>Keep discovering</span></div>
+    </div>
+</section>
+
+<section class="stats">
+    <div><h2>04</h2><p>Learning paths</p></div>
+    <div><h2>∞</h2><p>Ways to grow</p></div>
+    <div><h2>01</h2><p>First step: you</p></div>
+</section>
+
+<section class="section" id="courses">
+    <div class="section-heading">
+        <span class="eyebrow">FIND YOUR PATH</span>
+        <h2>Skills for the world<br><span>you're building.</span></h2>
+        <p>Explore a field that excites you and start learning something meaningful.</p>
+    </div>
+
+    <div class="course-grid">
+        <article class="course-card course-purple">
+            <div class="course-icon">⌘</div>
+            <span class="course-number">01 / TECHNOLOGY</span>
+            <h3>Web Development</h3>
+            <p>Turn your ideas into beautiful, functional websites and applications.</p>
+            <a href="#register" class="course-link">Start exploring ↗</a>
+        </article>
+
+        <article class="course-card course-pink">
+            <div class="course-icon">✳</div>
+            <span class="course-number">02 / CREATIVITY</span>
+            <h3>UI/UX Design</h3>
+            <p>Design thoughtful digital experiences that put people first.</p>
+            <a href="#register" class="course-link">Start exploring ↗</a>
+        </article>
+
+        <article class="course-card course-blue">
+            <div class="course-icon">⌁</div>
+            <span class="course-number">03 / SECURITY</span>
+            <h3>Cyber Security</h3>
+            <p>Understand digital threats and learn how to protect information.</p>
+            <a href="#register" class="course-link">Start exploring ↗</a>
+        </article>
+
+        <article class="course-card course-yellow">
+            <div class="course-icon">▥</div>
+            <span class="course-number">04 / DISCOVERY</span>
+            <h3>Data Science</h3>
+            <p>Explore data, uncover patterns, and turn insights into ideas.</p>
+            <a href="#register" class="course-link">Start exploring ↗</a>
+        </article>
+    </div>
+</section>
+
+<section class="benefits" id="benefits">
+    <div>
+        <span class="eyebrow">LEARNING, REIMAGINED</span>
+        <h2>Your goals.<br>Your pace.<br><span>Your future.</span></h2>
+    </div>
+    <div class="benefit-list">
+        <div class="benefit-item"><span>01</span><div><h3>Learn at your pace</h3><p>Take your time, explore new ideas, and learn in a way that works for you.</p></div></div>
+       <div class="benefit-item"><span>02</span><div><h3>Explore new interests</h3><p>Discover different learning paths and find the skills to shape your future.</p></div></div>
+        <div class="benefit-item"><span>03</span><div><h3>Build real-world skills</h3><p>Explore practical topics and prepare for new opportunities.</p></div></div>
+    </div>
+</section>
+
+<section class="section" id="register">
+    <div class="form-card">
+        <span class="eyebrow">YOUR NEXT CHAPTER</span>
+        <h2>Start learning today.</h2>
+        <p class="form-intro">Register and take your first step with LearnSpace.</p>
+
+        <form action="/submit" method="POST" onsubmit="return validateForm()">
+            <label class="form-label" for="name">Full name</label>
+            <input class="form-control" type="text" id="name" name="name" required>
+
+            <label class="form-label" for="email">Email address</label>
+            <input class="form-control" type="email" id="email" name="email" required>
+
+            <label class="form-label" for="age">Age</label>
+            <input class="form-control" type="number" id="age" name="age" min="16" max="100" required>
+
+            <label class="form-label" for="course">Choose a course</label>
+            <select class="form-select" id="course" name="course" required>
+                <option value="">Select a course</option>
+                <option value="Web Development">Web Development</option>
+                <option value="UI/UX Design">UI/UX Design</option>
+                <option value="Cyber Security">Cyber Security</option>
+                <option value="Data Science">Data Science</option>
+            </select>
+
+            <p id="error" role="alert"></p>
+            <button type="submit" class="primary-button submit-button">Register Now ↗</button>
+        </form>
+    </div>
+</section>
+
+<footer class="footer">
+    <div class="logo">LearnSpace<span>.</span></div>
+    <p>Keep learning. Keep growing.</p>
+    <span>© 2026 LearnSpace</span>
+</footer>
+
+<script>
+function validateForm() {
+    const name = document.getElementById("name").value.trim();
+    const email = document.getElementById("email").value.trim();
+    const age = Number(document.getElementById("age").value);
+    const course = document.getElementById("course").value;
+    const error = document.getElementById("error");
+
+    if (!name || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email) ||
+        !Number.isInteger(age) || age < 16 || age > 100 || !course) {
+        error.textContent = "Please enter valid details in every field.";
+        return false;
+    }
+
+    error.textContent = "";
+    return true;
+}
+</script>
+
+</body>
+</html>
