@@ -1,0 +1,29 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registration Successful</title>
+    <link rel="stylesheet" href="/style.css">
+</head>
+<body style="font-family: Arial, sans-serif; background: #f3efff; padding: 30px;">
+
+    <div style="max-width: 450px; margin: auto; background: white; padding: 25px; border-radius: 15px; text-align: center; box-shadow: 0 4px 12px #ddd;">
+
+        <h1 style="color: #238636;">Registration Successful!</h1>
+        <p>Thank you for registering.</p>
+
+        <h3>Your Details</h3>
+
+        <p><strong>Name:</strong> <%= student.name %></p>
+        <p><strong>Email:</strong> <%= student.email %></p>
+        <p><strong>Age:</strong> <%= student.age %></p>
+        <p><strong>Course:</strong> <%= student.course %></p>
+
+        <a href="/" style="display: inline-block; margin-top: 15px; color: #7048c6;">Register Another Student</a>
+
+    </div>
+
+</body>
+</html>
