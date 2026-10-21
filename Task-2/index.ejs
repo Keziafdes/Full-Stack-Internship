@@ -1,0 +1,89 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Registration</title>
+    <link rel="stylesheet" href="/style.css">
+</head>
+<body style="font-family: Arial, sans-serif; background: #f3efff; padding: 30px;">
+
+    <div style="max-width: 450px; margin: auto; background: white; padding: 25px; border-radius: 15px; box-shadow: 0 4px 12px #ddd;">
+
+        <h1 style="text-align: center; color: #7048c6;">Student Registration</h1>
+        <p style="text-align: center;">Enter your details to register.</p>
+
+        <form action="/submit" method="POST" onsubmit="return validateForm()">
+
+            <label for="name">Full Name</label>
+            <input type="text" id="name" name="name" required
+                   minlength="2" placeholder="Enter your name"
+                   style="width: 100%; padding: 10px; margin: 8px 0 15px; box-sizing: border-box;">
+
+            <label for="email">Email Address</label>
+            <input type="email" id="email" name="email" required
+                   placeholder="Enter your email"
+                   style="width: 100%; padding: 10px; margin: 8px 0 15px; box-sizing: border-box;">
+
+            <label for="age">Age</label>
+            <input type="number" id="age" name="age" min="16" max="100" required
+                   placeholder="Enter your age"
+                   style="width: 100%; padding: 10px; margin: 8px 0 15px; box-sizing: border-box;">
+
+            <label for="course">Choose Course</label>
+            <select id="course" name="course" required
+                    style="width: 100%; padding: 10px; margin: 8px 0 15px; box-sizing: border-box;">
+                <option value="">-- Select a course --</option>
+                <option value="Web Development">Web Development</option>
+                <option value="UI/UX Design">UI/UX Design</option>
+                <option value="Cyber Security">Cyber Security</option>
+                <option value="Data Science">Data Science</option>
+            </select>
+
+            <p id="error" style="color: red;"></p>
+
+            <button type="submit"
+                    style="width: 100%; padding: 12px; background: #7048c6; color: white; border: none; border-radius: 6px; cursor: pointer;">
+                Register
+            </button>
+
+        </form>
+    </div>
+
+    <script>
+        function validateForm() {
+            const name = document.getElementById("name").value.trim();
+            const email = document.getElementById("email").value.trim();
+            const age = Number(document.getElementById("age").value);
+            const course = document.getElementById("course").value;
+            const error = document.getElementById("error");
+
+            error.textContent = "";
+
+            if (name.length < 2) {
+                error.textContent = "Please enter your full name.";
+                return false;
+            }
+
+            if (!email.includes("@") || !email.includes(".")) {
+                error.textContent = "Please enter a valid email.";
+                return false;
+            }
+
+            if (!Number.isInteger(age) || age < 16 || age > 100) {
+                error.textContent = "Age must be between 16 and 100.";
+                return false;
+            }
+
+            if (!course) {
+                error.textContent = "Please select a course.";
+                return false;
+            }
+
+            return true;
+        }
+    </script>
+
+</body>
+</html>
